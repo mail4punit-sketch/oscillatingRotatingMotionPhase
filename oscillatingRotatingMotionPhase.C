@@ -69,8 +69,15 @@ Foam::solidBodyMotionFunctions::oscillatingRotatingMotionPhase::
 transformation() const
 {
     scalar t = time_.value();
-
-    vector eulerAngles = amplitude_*sin(omega_*t + phase_);
+    scalar A = amplitude_.z();
+    scalar theta = A*cos(omega_*t)- A;
+    vector eulerAngles =  vector
+                        (
+                                0,      // Rotation about X
+                                0,      // Rotation about Y
+                                theta   // Rotation about Z
+                        );  
+    //vector eulerAngles = amplitude_*sin(omega_*t + phase_);
 
     // Convert the rotational motion from deg to rad
     eulerAngles *= degToRad();
